@@ -69,7 +69,6 @@ public class SpawnManager : MonoBehaviour
         Material[] mats = vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials;
         mats[0] = materials[(int) (GameManager.Instance.Settings.myScenarioObj.Cars[idx].Color) ];
         vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials = mats;
-
         GameObject[] vehicleCameras = vehicleInstance.transform.Find("Cameras").GetComponent<CameraList>().cameras;
     
         for(int i = 0; i < vehicleCameras.Length; i++) 
@@ -83,6 +82,7 @@ public class SpawnManager : MonoBehaviour
         foreach (var pub in vehiclePublishers)
         {
             pub.ToggleActive(isROS);
+            pub.SetCarNumber(GameManager.Instance.Settings.myScenarioObj.Cars[idx].CarNum);
         }
 
         // Handle the enabling/disabling of Inputs based on ControlType
@@ -95,6 +95,7 @@ public class SpawnManager : MonoBehaviour
         foreach (Autonoma.VehicleInputSubscriber vi in vehicleSubscribers)
         {
             vi.gameObject.SetActive(isROS);
+            vi.carNum = GameManager.Instance.Settings.myScenarioObj.Cars[idx].CarNum;
         }
     }
 

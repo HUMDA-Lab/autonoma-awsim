@@ -21,5 +21,7 @@ namespace Autonoma
     {
         // Any common methods or properties you want, or leave it empty.
         void ToggleActive(bool isActive);
+
+        void SetCarNumber(int num);
     }
 }

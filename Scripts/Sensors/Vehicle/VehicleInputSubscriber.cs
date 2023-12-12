@@ -34,10 +34,14 @@ public class VehicleInputSubscriber : MonoBehaviour
     CanSubscriber canBrakeCommandSubscriber;
     CanSubscriber canGearCommandSubscriber;
 
+    public int carNum = 0;
+
     void Start()
     {
         carController = HelperFunctions.GetParentComponent<CarController>(transform);
         var qos = qosSettings.GetQoSProfile();
+
+        vehicleInputsTopic = vehicleInputsTopic +  "/car" + carNum.ToString();
 
         vehicleInputsSubscriber = SimulatorROS2Node.CreateSubscription<VehicleInputs>(vehicleInputsTopic, msg =>
             {

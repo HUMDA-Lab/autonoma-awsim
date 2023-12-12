@@ -27,6 +27,8 @@ public class Publisher<T> : MonoBehaviour, IPublisherBase where T : ROS2.Message
     public virtual string frameId  { get; set;}
     IPublisher<T> publisher;
     public T msg;
+
+    public int carNum;
     public QoSSettings qosSettings = new QoSSettings()
     {
         ReliabilityPolicy = ReliabilityPolicy.QOS_POLICY_RELIABILITY_RELIABLE,
@@ -40,7 +42,7 @@ public class Publisher<T> : MonoBehaviour, IPublisherBase where T : ROS2.Message
     protected virtual void Start()
     {
         msg = new T();
-        fullTopicName = rosNamespace + topicName;
+        fullTopicName = rosNamespace + topicName + "/car" + carNum.ToString();
         // Create publisher.
         var qos = qosSettings.GetQoSProfile();
         publisher = SimulatorROS2Node.CreatePublisher<T>(fullTopicName, qos);
@@ -79,6 +81,10 @@ public class Publisher<T> : MonoBehaviour, IPublisherBase where T : ROS2.Message
     public void ToggleActive(bool isActive)
     {
         this.gameObject.SetActive(isActive);
+    }
+    public void SetCarNumber(int num)
+    {
+        carNum = num;
     }
 }
 } // end of autonoma namespace
